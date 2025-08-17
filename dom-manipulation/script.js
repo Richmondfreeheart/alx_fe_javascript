@@ -320,3 +320,7 @@ document.getElementById("addQuote").addEventListener("click", addQuote);
 document.getElementById("categoryFilter").addEventListener("change", filterQuotes);
 
 
+function displayQuote(quote) {
+  document.getElementById('quoteDisplay').innerText = quote;
+  sessionStorage.setItem('lastViewedQuote', quote); // Optional
+}
