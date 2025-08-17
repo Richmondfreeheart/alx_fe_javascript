@@ -324,3 +324,47 @@ function displayQuote(quote) {
   document.getElementById('quoteDisplay').innerText = quote;
   sessionStorage.setItem('lastViewedQuote', quote); // Optional
 }
+
+
+
+
+let quotes = [];
+
+function displayQuote(text) {
+  document.getElementById('quoteDisplay').innerText = text;
+  sessionStorage.setItem('lastViewedQuote', text);
+}
+
+function addQuote(text) {
+  const id = Date.now(); // Simulated unique ID
+  quotes.push({ id, text });
+  saveQuotesToLocalStorage(quotes);
+  displayQuote(text);
+}
+
+document.getElementById('addQuoteBtn').addEventListener('click', () => {
+  const input = document.getElementById('quoteInput');
+  if (input.value.trim()) {
+    addQuote(input.value.trim());
+    input.value = '';
+  }
+});
+
+document.getElementById('newQuoteBtn').addEventListener('click', () => {
+  if (quotes.length) {
+    const random = quotes[Math.floor(Math.random() * quotes.length)];
+    displayQuote(random.text);
+  }
+});
+
+window.onload = () => {
+  quotes = getQuotesFromLocalStorage();
+  const last = sessionStorage.getItem('lastViewedQuote');
+  if (last) displayQuote(last);
+  syncQuotesWithServer();
+};
+
+setInterval(syncQuotesWithServer, 30000); // Periodic sync
+
+// Reuse previous functions: getQuotesFromLocalStorage, saveQuotesToLocalStorage, showNotification, syncQuotesWithServer
+
